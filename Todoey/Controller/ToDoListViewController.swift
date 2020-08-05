@@ -7,14 +7,21 @@
 //
 
 import UIKit
+import CoreData
 
 class ToDoListViewController: UITableViewController {
     
-    var itemArray = ["Data1", "Deta2",  "Data3"]
+    //MARK: - Add item to CoreData
+    let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
+    
+    var itemArray = [Item]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
+        print(FileManager.default.urls(for: .documentDirectory, in: .userDomainMask))
+        
+        loadItem()
     }
     
     //MARK: - Data Source
@@ -32,7 +39,9 @@ class ToDoListViewController: UITableViewController {
         // dequeueReusableCell Returns a reusable table-view cell object for the specified reuse identifier and adds it to the table.
         let cell = tableView.dequeueReusableCell(withIdentifier: "ToDoItemCells", for: indexPath)
         
-        cell.textLabel?.text = itemArray[indexPath.row]
+        let item = itemArray[indexPath.row]
+        
+        cell.textLabel?.text = item.title
         
         return cell
     }
@@ -41,7 +50,6 @@ class ToDoListViewController: UITableViewController {
     
     //Tells the delegate that the specified row is now selected.
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        print(itemArray[indexPath.row])
         
         //Deselects a given row identified by index path, with an option to animate the deselection.
         tableView.deselectRow(at: indexPath, animated: true)
@@ -69,12 +77,19 @@ class ToDoListViewController: UITableViewController {
         //An action that can be taken when the user taps a button in an alert.
         let action = UIAlertAction(title: "Add Item", style: .default) { (action) in
             //what will happen once the user clicks the add Item Button on our UIAlert
+            
             print("success!")
             print(alertText.text!)
             
+            let newItem = Item(context: self.context)
+            newItem.title = alertText.text!
+            newItem.done = false
+            
             if alertText.text != "" {
-            self.itemArray.append(alertText.text ?? "New Item")
+                self.itemArray.append(newItem)
             }
+            
+            self.saveItem()
             
             //Reloads the rows and sections of the table view.
             self.tableView.reloadData()
@@ -94,6 +109,28 @@ class ToDoListViewController: UITableViewController {
         present(alert, animated: true, completion: nil)
         
     }
+    
+    //MARK: - Save Item Function
+    
+    func saveItem ()  {
+        do {
+            try context.save()
+        } catch {
+            print("Save contexts error: \(error)")
+        }
+    }
+    
+    //MARK: - Create Load Item Function
+    
+    func loadItem () {
+        let request : NSFetchRequest<Item> = Item.fetchRequest()
+        do {
+            itemArray =  try  context.fetch(request)
+        } catch  {
+            print("Load Item error \(error)")
+        }
+    }
+    
     
 }
 
