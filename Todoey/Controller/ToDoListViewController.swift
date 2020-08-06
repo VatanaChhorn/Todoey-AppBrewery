@@ -54,13 +54,24 @@ class ToDoListViewController: UITableViewController {
         //Deselects a given row identified by index path, with an option to animate the deselection.
         tableView.deselectRow(at: indexPath, animated: true)
         
+        //Delete context
         
-        //CellForRow: Returns the table cell at the specified index path.
-        if tableView.cellForRow(at: indexPath)?.accessoryType == .checkmark {
-            tableView.cellForRow(at: indexPath)?.accessoryType = .none
-        } else {
-            tableView.cellForRow(at: indexPath)?.accessoryType = .checkmark
-        }
+        context.delete(itemArray[indexPath.row])
+        itemArray.remove(at: indexPath.row)
+       
+        
+        //Update done item in Database
+        
+    //  itemArray[indexPath.row].done = !itemArray[indexPath.row].done
+        
+        saveItem()
+        
+        tableView.reloadData()
+  
+        //Check the checkbox condition
+        
+      //  tableView.cellForRow(at: indexPath)?.accessoryType = itemArray[indexPath.row].done ? .checkmark : .none
+       
     }
     
     
