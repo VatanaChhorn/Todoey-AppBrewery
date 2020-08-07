@@ -9,7 +9,7 @@
 import UIKit
 import CoreData
 
-class ToDoListViewController: UITableViewController {
+class ToDoListViewController: UITableViewController, UISearchBarDelegate {
     
     //MARK: - Add item to CoreData
     let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
@@ -20,6 +20,7 @@ class ToDoListViewController: UITableViewController {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
         print(FileManager.default.urls(for: .documentDirectory, in: .userDomainMask))
+        
         
         loadItem()
     }
