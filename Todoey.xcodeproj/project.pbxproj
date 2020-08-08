@@ -11,6 +11,7 @@
 		891EFF2324DA60080087D059 /* ToDoListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 891EFF2224DA60080087D059 /* ToDoListViewController.swift */; };
 		891EFF2624DA76BB0087D059 /* Model.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 891EFF2424DA76BB0087D059 /* Model.xcdatamodeld */; };
 		891EFF4B24DACC0C0087D059 /* DataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 891EFF4A24DACC0C0087D059 /* DataModel.swift */; };
+		89459F6824DEA23A00BF1FF5 /* CatagoryTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89459F6724DEA23A00BF1FF5 /* CatagoryTableViewController.swift */; };
 		EB2BE4FA239524DB00FB933B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB2BE4F9239524DB00FB933B /* AppDelegate.swift */; };
 		EB2BE503239524DC00FB933B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EB2BE502239524DC00FB933B /* Assets.xcassets */; };
 		EB2BE506239524DC00FB933B /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EB2BE504239524DC00FB933B /* LaunchScreen.storyboard */; };
@@ -21,6 +22,7 @@
 		891EFF2224DA60080087D059 /* ToDoListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ToDoListViewController.swift; sourceTree = "<group>"; };
 		891EFF2524DA76BB0087D059 /* Model.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model.xcdatamodel; sourceTree = "<group>"; };
 		891EFF4A24DACC0C0087D059 /* DataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataModel.swift; sourceTree = "<group>"; };
+		89459F6724DEA23A00BF1FF5 /* CatagoryTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CatagoryTableViewController.swift; sourceTree = "<group>"; };
 		EB2BE4F6239524DB00FB933B /* Todoey.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Todoey.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		EB2BE4F9239524DB00FB933B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		EB2BE502239524DC00FB933B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -51,6 +53,7 @@
 		891EFF4D24DACC1C0087D059 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				89459F6724DEA23A00BF1FF5 /* CatagoryTableViewController.swift */,
 				891EFF2224DA60080087D059 /* ToDoListViewController.swift */,
 			);
 			path = Controller;
@@ -175,6 +178,7 @@
 			files = (
 				891EFF2324DA60080087D059 /* ToDoListViewController.swift in Sources */,
 				891EFF4B24DACC0C0087D059 /* DataModel.swift in Sources */,
+				89459F6824DEA23A00BF1FF5 /* CatagoryTableViewController.swift in Sources */,
 				EB2BE4FA239524DB00FB933B /* AppDelegate.swift in Sources */,
 				891EFF2624DA76BB0087D059 /* Model.xcdatamodeld in Sources */,
 			);

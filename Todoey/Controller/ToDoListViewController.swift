@@ -9,7 +9,7 @@
 import UIKit
 import CoreData
 
-class ToDoListViewController: UITableViewController, UISearchBarDelegate {
+class ToDoListViewController: UITableViewController {
     
     //MARK: - Add item to CoreData
     let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
@@ -141,8 +141,46 @@ class ToDoListViewController: UITableViewController, UISearchBarDelegate {
         } catch  {
             print("Load Item error \(error)")
         }
+        
+        tableView.reloadData()
+        
     }
     
+    
+}
+
+extension ToDoListViewController: UISearchBarDelegate {
+    
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        let request : NSFetchRequest <Item> = Item.fetchRequest()
+        let predicate = NSPredicate(format: "title CONTAINS[cd] %@", searchBar.text!)
+        
+        request.predicate = predicate
+        
+        let sortDescriptor = NSSortDescriptor(key: "title", ascending: true)
+        request.sortDescriptors = [sortDescriptor]
+        if searchBar.text?.count != 0 {
+        do {
+          itemArray =  try context.fetch(request)
+        } catch  {
+            print("SearchButtonClickeds fectch request: \(error)")
+        }
+        } 
+        
+        tableView.reloadData()
+        
+        print(searchBar.text!)
+    }
+    
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        if searchBar.text?.count == 0 {
+            loadItem()
+            DispatchQueue.main.async {
+                searchBar.resignFirstResponder()
+            }
+            
+        }
+    }
     
 }
 
