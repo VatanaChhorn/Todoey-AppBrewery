@@ -14,6 +14,8 @@ class CatagoryTableViewController: UITableViewController {
     
     let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
     var catagoryArray = [Catagory]()
+    var rowSelected: Int = 0
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -36,7 +38,14 @@ class CatagoryTableViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
+        self.rowSelected = indexPath.row
         performSegue(withIdentifier: "performItemScreen", sender: self)
+       
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        let destinationVC = segue.destination  as! ToDoListViewController
+        destinationVC.selectedCatagory = catagoryArray[rowSelected]
     }
     
     

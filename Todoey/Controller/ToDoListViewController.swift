@@ -16,13 +16,16 @@ class ToDoListViewController: UITableViewController {
     
     var itemArray = [Item]()
     
+    var selectedCatagory : Catagory?  {
+        didSet {
+            loadItem()
+        }
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
         print(FileManager.default.urls(for: .documentDirectory, in: .userDomainMask))
-        
-        
-        loadItem()
     }
     
     //MARK: - Data Source
@@ -59,20 +62,20 @@ class ToDoListViewController: UITableViewController {
         
         context.delete(itemArray[indexPath.row])
         itemArray.remove(at: indexPath.row)
-       
+        
         
         //Update done item in Database
         
-    //  itemArray[indexPath.row].done = !itemArray[indexPath.row].done
+        //  itemArray[indexPath.row].done = !itemArray[indexPath.row].done
         //
         saveItem()
         
         tableView.reloadData()
-  
+        
         //Check the checkbox condition
         
-      //  tableView.cellForRow(at: indexPath)?.accessoryType = itemArray[indexPath.row].done ? .checkmark : .none
-       
+        //  tableView.cellForRow(at: indexPath)?.accessoryType = itemArray[indexPath.row].done ? .checkmark : .none
+        
     }
     
     
@@ -96,6 +99,7 @@ class ToDoListViewController: UITableViewController {
             let newItem = Item(context: self.context)
             newItem.title = alertText.text!
             newItem.done = false
+            newItem.parentCatagory = self.selectedCatagory
             
             if alertText.text != "" {
                 self.itemArray.append(newItem)
@@ -136,6 +140,8 @@ class ToDoListViewController: UITableViewController {
     
     func loadItem () {
         let request : NSFetchRequest<Item> = Item.fetchRequest()
+        let predicate = NSPredicate(format: "parentCatagory.name MATCHES %@", selectedCatagory!.name!)
+        request.predicate = predicate
         do {
             itemArray =  try  context.fetch(request)
         } catch  {
@@ -160,11 +166,11 @@ extension ToDoListViewController: UISearchBarDelegate {
         let sortDescriptor = NSSortDescriptor(key: "title", ascending: true)
         request.sortDescriptors = [sortDescriptor]
         if searchBar.text?.count != 0 {
-        do {
-          itemArray =  try context.fetch(request)
-        } catch  {
-            print("SearchButtonClickeds fectch request: \(error)")
-        }
+            do {
+                itemArray =  try context.fetch(request)
+            } catch  {
+                print("SearchButtonClickeds fectch request: \(error)")
+            }
         } 
         
         tableView.reloadData()
