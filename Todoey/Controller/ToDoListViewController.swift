@@ -8,6 +8,7 @@
 
 import UIKit
 import CoreData
+import RealmSwift
 
 class ToDoListViewController: UITableViewController {
     
@@ -16,9 +17,9 @@ class ToDoListViewController: UITableViewController {
     
     var itemArray = [Item]()
     
-    var selectedCatagory : Catagory?  {
+    var selectedCatagory : Catagories?  {
         didSet {
-            loadItem()
+//            loadItem()
         }
     }
     
@@ -99,7 +100,7 @@ class ToDoListViewController: UITableViewController {
             let newItem = Item(context: self.context)
             newItem.title = alertText.text!
             newItem.done = false
-            newItem.parentCatagory = self.selectedCatagory
+//            newItem.parentCatagory = self.selectedCatagory
             
             if alertText.text != "" {
                 self.itemArray.append(newItem)
@@ -137,20 +138,20 @@ class ToDoListViewController: UITableViewController {
     }
     
     //MARK: - Create Load Item Function
-    
-    func loadItem () {
-        let request : NSFetchRequest<Item> = Item.fetchRequest()
-        let predicate = NSPredicate(format: "parentCatagory.name MATCHES %@", selectedCatagory!.name!)
-        request.predicate = predicate
-        do {
-            itemArray =  try  context.fetch(request)
-        } catch  {
-            print("Load Item error \(error)")
-        }
-        
-        tableView.reloadData()
-        
-    }
+//    
+//    func loadItem () {
+//        let request : NSFetchRequest<Item> = Item.fetchRequest()
+//        let predicate = NSPredicate(format: "parentCatagory.name MATCHES %@", selectedCatagory!.name!)
+//        request.predicate = predicate
+//        do {
+//            itemArray =  try  context.fetch(request)
+//        } catch  {
+//            print("Load Item error \(error)")
+//        }
+//        
+//        tableView.reloadData()
+//        
+//    }
     
     
 }
@@ -178,15 +179,15 @@ extension ToDoListViewController: UISearchBarDelegate {
         print(searchBar.text!)
     }
     
-    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        if searchBar.text?.count == 0 {
-            loadItem()
-            DispatchQueue.main.async {
-                searchBar.resignFirstResponder()
-            }
-            
-        }
-    }
-    
+//    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+//        if searchBar.text?.count == 0 {
+//            loadItem()
+//            DispatchQueue.main.async {
+//                searchBar.resignFirstResponder()
+//            }
+//
+//        }
+//    }
+//
 }
 
