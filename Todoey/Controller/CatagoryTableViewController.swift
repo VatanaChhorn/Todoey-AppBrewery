@@ -65,8 +65,9 @@ class CatagoryTableViewController: UITableViewController {
             
             let newCatagory = Catagories()
             newCatagory.name = addNewCatagoriesText.text!
-            
-            self.saveItem(catagory: newCatagory)
+            if addNewCatagoriesText.text?.count != 0 {
+                 self.saveItem(catagory: newCatagory)
+            }
         }
         
         alert.addTextField { (textfield) in
