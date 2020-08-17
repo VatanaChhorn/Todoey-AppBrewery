@@ -98,15 +98,15 @@ class ToDoListViewController: UITableViewController {
             if let  currentCatagory = self.selectedCatagory     {
                 if alertText.text! != ""  {
                     do {
-                                       try self.realm.write({
-                                           let newItem = Items()
-                                                         newItem.title = alertText.text!
-                                                         newItem.done = false
-                                                         currentCatagory.items.append(newItem)
-                                       })
-                                   } catch  {
-                                       print("Error saving item \(error)")
-                                   }
+                        try self.realm.write({
+                            let newItem = Items()
+                            newItem.title = alertText.text!
+                            newItem.done = false
+                            currentCatagory.items.append(newItem)
+                        })
+                    } catch  {
+                        print("Error saving item \(error)")
+                    }
                 }
             }
             
@@ -157,7 +157,7 @@ class ToDoListViewController: UITableViewController {
 }
 //
 extension ToDoListViewController: UISearchBarDelegate {
-
+    
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         
         itemArray = selectedCatagory?.items.filter("title CONTAINS[cd] %@", searchBar.text!).sorted(byKeyPath: "title", ascending: true)
@@ -165,16 +165,16 @@ extension ToDoListViewController: UISearchBarDelegate {
         tableView.reloadData()
         
     }
-
+    
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         if searchBar.text?.count == 0 {
             loadItem()
             DispatchQueue.main.async {
                 searchBar.resignFirstResponder()
             }
-
+            
         }
     }
-
+    
 }
 
