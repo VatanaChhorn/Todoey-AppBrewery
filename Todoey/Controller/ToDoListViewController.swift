@@ -9,6 +9,7 @@
 import UIKit
 import CoreData
 import RealmSwift
+import SwipeCellKit
 
 class ToDoListViewController: UITableViewController {
     
@@ -43,8 +44,8 @@ class ToDoListViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         // dequeueReusableCell Returns a reusable table-view cell object for the specified reuse identifier and adds it to the table.
-        let cell = tableView.dequeueReusableCell(withIdentifier: "ToDoItemCells", for: indexPath)
-        
+        let cell = tableView.dequeueReusableCell(withIdentifier: "ToDoItemCells", for: indexPath) as! SwipeTableViewCell
+        cell.delegate = self
         let item = itemArray?[indexPath.row]
         
         cell.textLabel?.text = item?.title ?? "There is no item added yet!"
@@ -178,3 +179,24 @@ extension ToDoListViewController: UISearchBarDelegate {
     
 }
 
+extension ToDoListViewController: SwipeTableViewCellDelegate {
+    
+    func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath, for orientation: SwipeActionsOrientation) -> [SwipeAction]? {
+        guard orientation == .right else { return nil }
+
+        let deleteAction = SwipeAction(style: .destructive, title: "Delete") { action, indexPath in
+            // handle action by updating model with deletion
+        }
+        
+        // customize the action appearance
+        deleteAction.image = UIImage(named: "delete")
+
+        return [deleteAction]
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, editActionsOptionsForItemAt indexPath: IndexPath, for orientation: SwipeActionsOrientation) -> SwipeOptions {
+        var options = SwipeOptions()
+        options.expansionStyle = .destructive
+        return options
+    }
+}
